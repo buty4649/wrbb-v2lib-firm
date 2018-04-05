@@ -1,0 +1,5 @@
+*.o
+*.mot
+*.map
+firmware_release/wrbb_mruby/libmruby.a
+firmware_release/citrus_sketch.bin
