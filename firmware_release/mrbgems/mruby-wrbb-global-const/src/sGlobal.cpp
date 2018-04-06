@@ -9,12 +9,10 @@
  */
 #include <mruby.h>
 
-#include "../wrbb.h"
-
 //**************************************************
 // 定義します
 //**************************************************
-void global_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_global_const_gem_init(mrb_state *mrb)
 {
 	mrb_define_global_const(mrb, "ON", mrb_fixnum_value(1));
 	mrb_define_global_const(mrb, "OFF", mrb_fixnum_value(0));
@@ -27,4 +25,7 @@ void global_Init(mrb_state *mrb)
 
 	mrb_define_global_const(mrb, "MSBFIRST", mrb_fixnum_value(1));
 	mrb_define_global_const(mrb, "LSBFIRST", mrb_fixnum_value(0));
+}
+
+extern "C" void mrb_mruby_wrbb_global_const_gem_final(mrb_state *mrb) {
 }

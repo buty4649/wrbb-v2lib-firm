@@ -210,9 +210,6 @@ MRuby::CrossBuild.new("RX630") do |conf|
   #do not build executable test
   conf.build_mrbtest_lib_only
 
-  #disable C++ exception
-  conf.disable_cxx_exception
-
   #gems from core
   #conf.gem :core => "mruby-array-ext"
   #conf.gem :core => "mruby-bin-debugger"
@@ -255,4 +252,6 @@ MRuby::CrossBuild.new("RX630") do |conf|
 
   #light-weight regular expression
   #conf.gem :github => "masamitsu-murase/mruby-hs-regexp", :branch => "master"
+
+  conf.gem "./mrbgems/mruby-wrbb-global-const"
 end
