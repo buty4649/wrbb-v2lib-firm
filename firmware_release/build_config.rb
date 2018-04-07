@@ -176,9 +176,10 @@ MRuby::CrossBuild.new("RX630") do |conf|
     cc.flags = "-Wall -g -O2 -flto -mcpu=rx600 -m64bit-doubles -L#{LIB_PATH}/"
     cc.compile_options = "%{flags} -o %{outfile} -c %{infile}"
 
-    current_path = File.dirname(__FILE__)
-    %w(/gr_common /gr_common/core /gr_common/rx63n).each do |path|
-      cc.include_paths <<= current_path + path
+    common_path = File.dirname(__FILE__) + "/gr_common"
+    cc.include_paths <<= common_path
+    %w(core lib/Wire rx63n).each do |path|
+      cc.include_paths <<= common_path + "/#{path}"
     end
 
     #configuration for low memory environment
@@ -190,6 +191,8 @@ MRuby::CrossBuild.new("RX630") do |conf|
     cc.defines << %w(KHASH_DEFAULT_SIZE=2)    # default size of khash table bucket
     cc.defines << %w(POOL_PAGE_SIZE=256)      # effective only for use with mruby-eval
     cc.defines << %w(MRB_BYTECODE_DECODE_OPTION)  # hooks for bytecode decoder
+
+    cc.defines << %w(ARDUINO=100)             # avoid "WProgram.h not found" at build time
   end
 
   conf.cxx do |cxx|
@@ -259,5 +262,6 @@ MRuby::CrossBuild.new("RX630") do |conf|
   #conf.gem :github => "masamitsu-murase/mruby-hs-regexp", :branch => "master"
 
   conf.gem "./mrbgems/mruby-wrbb-global-const"
+  conf.gem "./mrbgems/mruby-wrbb-i2c"
   conf.gem "./mrbgems/mruby-wrbb-kernel-ext"
 end
