@@ -15,7 +15,6 @@
 #include <mruby/hash.h>
 
 #include "../wrbb.h"
-#include "sKernel.h"
 
 RTC_TIMETYPE TimeRTC;
 

@@ -176,6 +176,11 @@ MRuby::CrossBuild.new("RX630") do |conf|
     cc.flags = "-Wall -g -O2 -flto -mcpu=rx600 -m64bit-doubles -L#{LIB_PATH}/"
     cc.compile_options = "%{flags} -o %{outfile} -c %{infile}"
 
+    current_path = File.dirname(__FILE__)
+    %w(/gr_common /gr_common/core /gr_common/rx63n).each do |path|
+      cc.include_paths <<= current_path + path
+    end
+
     #configuration for low memory environment
     cc.defines << %w(MRB_USE_FLOAT)           # add -DMRB_USE_FLOAT to use float instead of double for floating point numbers
     cc.defines << %w(MRB_FUNCALL_ARGC_MAX=6)  # argv max size in mrb_funcall
@@ -254,4 +259,5 @@ MRuby::CrossBuild.new("RX630") do |conf|
   #conf.gem :github => "masamitsu-murase/mruby-hs-regexp", :branch => "master"
 
   conf.gem "./mrbgems/mruby-wrbb-global-const"
+  conf.gem "./mrbgems/mruby-wrbb-kernel-ext"
 end

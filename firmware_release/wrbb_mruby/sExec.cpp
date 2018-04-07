@@ -24,7 +24,6 @@
 
 #include "../wrbb.h"
 #include "sExec.h"
-#include "sKernel.h"
 #include "sSys.h"
 #include "sSerial.h"
 #include "sMem.h"
@@ -94,7 +93,6 @@ bool RubyRun(void)
 #endif
 	Serial.clearBreakState();
 
-	kernel_Init(mrb);	//カーネル関連メソッドの設定
 	sys_Init(mrb);		//システム関連メソッドの設定
 	serial_Init(mrb);	//シリアル通信関連メソッドの設定
 	mem_Init(mrb);		//ファイル関連メソッドの設定

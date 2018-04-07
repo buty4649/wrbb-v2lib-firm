@@ -15,7 +15,6 @@
 #include <mruby/class.h>
 
 #include "../wrbb.h"
-#include "sKernel.h"
 
 #define WIRE_MAX	6
 

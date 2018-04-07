@@ -567,7 +567,7 @@ mrb_value mrb_El_Psy_congroo(mrb_state *mrb, mrb_value self)
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void kernel_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_kernel_ext_gem_init(mrb_state *mrb)
 {
 	mrb_define_method(mrb, mrb->kernel_module, "pinMode", mrb_kernel_pinMode, MRB_ARGS_REQ(2));
 
@@ -606,4 +606,8 @@ void kernel_Init(mrb_state *mrb)
 
 
 
+}
+
+extern "C" void mrb_mruby_wrbb_kernel_ext_gem_final(mrb_state* mrb)
+{
 }
