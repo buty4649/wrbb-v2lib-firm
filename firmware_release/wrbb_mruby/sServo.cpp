@@ -16,7 +16,6 @@
 
 #include "sExec.h"
 #include "../wrbb.h"
-#include "sKernel.h"
 
 #define ATTACH_MAX	20
 

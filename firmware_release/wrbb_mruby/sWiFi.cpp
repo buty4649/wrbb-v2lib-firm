@@ -16,7 +16,6 @@
 #include <mruby/array.h>
 
 #include "../wrbb.h"
-#include "sKernel.h"
 #include "sSerial.h"
 
 #include "sWiFi.h"

@@ -14,7 +14,6 @@
 #include <mruby/string.h>
 
 #include "../wrbb.h"
-#include "sKernel.h"
 #include "sSerial.h"
 
 #define  PANCAKE_BAURATE	115200

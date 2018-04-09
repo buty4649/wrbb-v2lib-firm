@@ -15,7 +15,6 @@
 #include <mruby/class.h>
 
 #include "../wrbb.h"
-#include "sKernel.h"
 
 #define WIRE_MAX	6
 
@@ -322,7 +321,7 @@ int freq;
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void i2c_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_i2c_gem_init(mrb_state *mrb)
 {
 	//0:Wire, 1:Wire1, 2:Wire2, 3:Wire3 4:Wire4 5:Wire5
 	RbWire[0] = &Wire;
@@ -345,4 +344,8 @@ void i2c_Init(mrb_state *mrb)
 	mrb_define_method(mrb, i2cModule, "lread", mrb_i2c_lread, MRB_ARGS_NONE());
 	mrb_define_method(mrb, i2cModule, "available", mrb_i2c_available, MRB_ARGS_NONE());
 	mrb_define_method(mrb, i2cModule, "frequency", mrb_i2c_frequency, MRB_ARGS_REQ(1));
+}
+
+extern "C" void mrb_mruby_wrbb_i2c_gem_final(mrb_state *mrb)
+{
 }
