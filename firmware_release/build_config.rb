@@ -37,6 +37,8 @@ MRuby::CrossBuild.new("RX630") do |conf|
     cc.flags = "-Wall -g -O2 -flto -mcpu=rx600 -m64bit-doubles -L#{LIB_PATH}/"
     cc.compile_options = "%{flags} -o %{outfile} -c %{infile}"
 
+    cc.include_paths <<= File.dirname(__FILE__) + "/wrbb_eepfile"
+
     common_path = File.dirname(__FILE__) + "/gr_common"
     cc.include_paths <<= common_path
     %w(core lib/Wire rx63n).each do |path|
@@ -87,4 +89,5 @@ MRuby::CrossBuild.new("RX630") do |conf|
   conf.gem "./mrbgems/mruby-wrbb-global-const"
   conf.gem "./mrbgems/mruby-wrbb-i2c"
   conf.gem "./mrbgems/mruby-wrbb-kernel-ext"
+  conf.gem "./mrbgems/mruby-wrbb-mem"
 end

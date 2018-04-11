@@ -13,8 +13,6 @@
 #include <mruby.h>
 #include <mruby/string.h>
 
-#include "../wrbb.h"
-
 FILEEEP Fpj0;
 FILEEEP *Fp0 = &Fpj0;			//コマンド用
 FILEEEP Fpj1;
@@ -266,7 +264,7 @@ int ret = 1;
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void mem_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_mem_gem_init(mrb_state *mrb)
 {
 	struct RClass *memdModule = mrb_define_module(mrb, "MemFile");
 
@@ -283,4 +281,8 @@ void mem_Init(mrb_state *mrb)
 	mrb_define_module_function(mrb, memdModule, "cp", mrb_mem_cp, MRB_ARGS_REQ(2) | MRB_ARGS_OPT(1));
 
 	mrb_define_module_function(mrb, memdModule, "rm", mrb_mem_rm, MRB_ARGS_REQ(1));
+}
+
+extern "C" void mrb_mruby_wrbb_mem_gem_final(mrb_state *mrb)
+{
 }
