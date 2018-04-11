@@ -83,6 +83,7 @@ MRuby::CrossBuild.new("RX630") do |conf|
   conf.gem :core => "mruby-math"
   conf.gem :core => "mruby-numeric-ext"
 
+  conf.gem "./mrbgems/mruby-wrbb-dc-motor"
   conf.gem "./mrbgems/mruby-wrbb-global-const"
   conf.gem "./mrbgems/mruby-wrbb-i2c"
   conf.gem "./mrbgems/mruby-wrbb-kernel-ext"
