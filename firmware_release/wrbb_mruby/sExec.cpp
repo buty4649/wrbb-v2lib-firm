@@ -26,7 +26,6 @@
 #include "sExec.h"
 #include "sSys.h"
 #include "sSerial.h"
-#include "sMem.h"
 #include "sServo.h"
 
 #if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
@@ -94,7 +93,6 @@ bool RubyRun(void)
 
 	sys_Init(mrb);		//システム関連メソッドの設定
 	serial_Init(mrb);	//シリアル通信関連メソッドの設定
-	mem_Init(mrb);		//ファイル関連メソッドの設定
 	servo_Init(mrb);	//サーボ関連メソッドの設定
 
 	//classtest_Init(mrb);

@@ -12,10 +12,6 @@
 #include <mruby.h>
 //#include <mruby/string.h>
 
-#include "../wrbb.h"
-
-#include "sDCMotor.h"
-
 #define M1_SPEED	4
 #define M1_LOGIC0	18
 #define M1_LOGIC1	3
@@ -190,7 +186,7 @@ int spd;
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void dcMotor_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_dc_motor_gem_init(mrb_state *mrb)
 {
 	pinMode(M1_LOGIC0, OUTPUT);
 	pinMode(M1_LOGIC1, OUTPUT);
@@ -204,4 +200,8 @@ void dcMotor_Init(mrb_state *mrb)
 	mrb_define_module_function(mrb, dcMotorModule, "cw", mrb_dcMotor_cw, MRB_ARGS_OPT(1));		//ClockWise
 	mrb_define_module_function(mrb, dcMotorModule, "ccw", mrb_dcMotor_ccw, MRB_ARGS_OPT(1));	//CounterClockWise
 	mrb_define_module_function(mrb, dcMotorModule, "speed", mrb_dcMotor_speed, MRB_ARGS_REQ(2));
+}
+
+extern "C" void mrb_mruby_wrbb_dc_motor_gem_final(mrb_state *mrb)
+{
 }
