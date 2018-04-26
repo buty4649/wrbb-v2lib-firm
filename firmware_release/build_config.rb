@@ -91,4 +91,5 @@ MRuby::CrossBuild.new("RX630") do |conf|
   conf.gem "./mrbgems/mruby-wrbb-kernel-ext"
   conf.gem "./mrbgems/mruby-wrbb-mem"
   conf.gem "./mrbgems/mruby-wrbb-rtc"
+  conf.gem "./mrbgems/mruby-wrbb-serial"
 end

@@ -15,8 +15,6 @@
 #include <mruby/class.h>
 #include <mruby/string.h>
 
-#include "../wrbb.h"
-
 #define SERIAL_MAX	6
 
 HardwareSerial *RbSerial[SERIAL_MAX];		//0:Serial(USB), 1:Serial1, 2:Serial3, 3:Serial2, 4:Serial6 5:Serial7
@@ -298,7 +296,7 @@ mrb_value mrb_serial_flash(mrb_state *mrb, mrb_value self)
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void serial_Init(mrb_state* mrb) {
+extern "C" void mrb_mruby_wrbb_serial_gem_init(mrb_state* mrb) {
 
 	RbSerial[0] = &Serial;	//0:Serial(USB)
 	RbSerial[1] = &Serial1;	//1:Serial1
@@ -322,4 +320,7 @@ void serial_Init(mrb_state* mrb) {
 	
 	//struct RClass *wifiModule = mrb_define_module(mrb, "WiFi");
 	//mrb_define_module_function(mrb, wifiModule, "bypass", mrb_wifi_bypass, MRB_ARGS_NONE());
+}
+
+extern "C" void mrb_mruby_wrbb_serial_gem_final(mrb_state* mrb) {
 }
