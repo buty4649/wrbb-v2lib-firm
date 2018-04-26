@@ -15,7 +15,6 @@
 #include "mruby.h"
 #include "mruby/string.h"
 
-#include "../wrbb.h"
 #include "sSdCard.h"
 
 File Fp[2];
@@ -417,16 +416,16 @@ int ret = 1;
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-int sdcard_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_sdcard_gem_init(mrb_state *mrb)
 {
 	//SDカードライブラリを初期化します
 	if(SD_init(NULL) == 0){
-		return 0;
+		return;
 	}
 
 	//SDクラスが既に設定されているか
 	if(SdClassFlag == true){
-		return 1;
+		return;
 	}
 	
 	//日付と時刻を返す関数を登録
@@ -454,7 +453,11 @@ int sdcard_Init(mrb_state *mrb)
 	//SDクラスのセットフラグをtrueにする
 	SdClassFlag = true;
 
-	return 1;
+	return;
+}
+
+extern "C" void mrb_mruby_wrbb_sdcard_gem_final(mrb_state *mrb)
+{
 }
 
 //**************************************************

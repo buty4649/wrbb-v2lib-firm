@@ -23,7 +23,7 @@
 
 #include "sExec.h"
 #if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	#include "sSdCard.h"
+    #define  SD_CLASS "SD"
 	#include "sWiFi.h"
 #endif
 
@@ -198,10 +198,6 @@ mrb_value mrb_system_getmrbpath(mrb_state *mrb, mrb_value self)
 mrb_value Is_useSD(mrb_state *mrb, mrb_value self, int mode)
 {
 int ret = 0;
-
-#if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	ret = sdcard_Init(mrb);		//SDカード関連メソッドの設定
-#endif
 
 	return (mode == 0?mrb_fixnum_value(ret):mrb_bool_value(ret == 1));
 }

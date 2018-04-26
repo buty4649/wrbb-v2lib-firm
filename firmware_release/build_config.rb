@@ -41,7 +41,7 @@ MRuby::CrossBuild.new("RX630") do |conf|
 
     common_path = File.dirname(__FILE__) + "/gr_common"
     cc.include_paths <<= common_path
-    %w(core lib/RTC lib/Servo lib/Wire rx63n).each do |path|
+    %w(core lib/RTC lib/SD lib/Servo lib/Wire rx63n).each do |path|
       cc.include_paths <<= common_path + "/#{path}"
     end
 
@@ -56,6 +56,7 @@ MRuby::CrossBuild.new("RX630") do |conf|
     cc.defines << %w(MRB_BYTECODE_DECODE_OPTION)  # hooks for bytecode decoder
 
     cc.defines << %w(ARDUINO=100)             # avoid "WProgram.h not found" at build time
+    cc.defines << %w(GRCITRUS)
   end
 
   conf.cxx do |cxx|
@@ -91,6 +92,7 @@ MRuby::CrossBuild.new("RX630") do |conf|
   conf.gem "./mrbgems/mruby-wrbb-kernel-ext"
   conf.gem "./mrbgems/mruby-wrbb-mem"
   conf.gem "./mrbgems/mruby-wrbb-rtc"
+  conf.gem "./mrbgems/mruby-wrbb-sdcard"
   conf.gem "./mrbgems/mruby-wrbb-serial"
   conf.gem "./mrbgems/mruby-wrbb-servo"
 end
