@@ -33,10 +33,6 @@
 	#include "sWiFi.h"
 #endif
 
-#if REALTIMECLOCK
-	#include "sRtc.h"
-#endif
-
 #ifdef SAMBOUKAN
 	#include "sDCMotor.h"
 #endif
@@ -96,10 +92,6 @@ bool RubyRun(void)
 	servo_Init(mrb);	//サーボ関連メソッドの設定
 
 	//classtest_Init(mrb);
-
-#if REALTIMECLOCK
-	rtc_Init(mrb);		//RTC関連メソッドの設定
-#endif
 
 #ifdef SAMBOUKAN
 	dcMotor_Init(mrb);		//SAMBOUKAの Motorクラス

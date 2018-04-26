@@ -14,8 +14,6 @@
 #include <mruby/array.h>
 #include <mruby/hash.h>
 
-#include "../wrbb.h"
-
 RTC_TIMETYPE TimeRTC;
 
 //**************************************************
@@ -164,7 +162,7 @@ int tmp;
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void rtc_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_rtc_gem_init(mrb_state *mrb)
 {
 	struct RClass *rtcModule = mrb_define_module(mrb, "Rtc");
 
@@ -177,6 +175,9 @@ void rtc_Init(mrb_state *mrb)
 
 }
 
+extern "C" void mrb_mruby_wrbb_rtc_gem_final(mrb_state *mrb)
+{
+}
 //rtc_attach_alarm_handler
 //概要 	アラーム発生時に処理する関数を登録します。
 //文法 	rtc_attach_alarm_handler(void(*)(void) function)
