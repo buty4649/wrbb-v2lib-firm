@@ -16,13 +16,8 @@
 #include <mruby/array.h>
 
 #include "../wrbb.h"
-#include "sSerial.h"
 
 #include "sWiFi.h"
-
-#if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	#include "sSdCard.h"
-#endif
 
 extern HardwareSerial *RbSerial[];		//0:Serial(USB), 1:Serial1, 2:Serial3, 3:Serial2, 4:Serial6 5:Serial7
 
@@ -657,11 +652,6 @@ char	*strFname, *strURL;
 int len = 0;
 File fp, fd;
 int sla, koron;
-
-	//SDカードが利用可能か確かめます
-	if(!sdcard_Init(mrb)){
-		return mrb_fixnum_value( 2 );
-	}
 
 	int n = mrb_get_args(mrb, "SS|A", &vFname, &vURL, &vHeaders);
 
@@ -1322,11 +1312,6 @@ File fp, fd;
 int sla, koron;
 int sBody, sHeader;
 
-	//SDカードが利用可能か確かめます
-	if (!sdcard_Init(mrb)){
-		return mrb_fixnum_value(2);
-	}
-
 	int n = mrb_get_args(mrb, "SAS", &vURL, &vHeaders, &vFname );
 
 	strFname = RSTRING_PTR(vFname);
@@ -1916,11 +1901,6 @@ mrb_value arv[2];
 		}
 	}
 
-	//SDカードが利用可能か確かめます
-	if (!sdcard_Init(mrb)){
-		return mrb_fixnum_value( 2 );
-	}
-
 	//****** AT+CIPSERVERコマンド ******
 	if(port < 0){
 		RbSerial[WIFI_SERIAL]->println("AT+CIPSERVER=0");
@@ -2307,11 +2287,6 @@ int decode = 0;
 
 	fsour = RSTRING_PTR(vsour);
 	fdesc = RSTRING_PTR(vdesc);
-
-	//SDカードが利用可能か確かめます
-	if (!sdcard_Init(mrb)){
-		return mrb_fixnum_value(1);
-	}
 
 	if (decode == 0){
 		//エンコードします

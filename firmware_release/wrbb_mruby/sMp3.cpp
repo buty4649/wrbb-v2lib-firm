@@ -18,10 +18,6 @@
 
 #include "sMp3.h"
 
-#if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	#include "sSdCard.h"
-#endif
-
 #define SW_ON		0
 #define SW_OFF		1
 
@@ -189,11 +185,6 @@ int mp3_Init(mrb_state *mrb,int pausePin, int stopPin)
 		return 0;
 	}
 	if(!chkCanUsePin(PausePin) || !chkCanUsePin(StopPin)){
-		return 0;
-	}
-
-	//SDカードが利用可能か確かめます
-	if(!sdcard_Init(mrb)){
 		return 0;
 	}
 
