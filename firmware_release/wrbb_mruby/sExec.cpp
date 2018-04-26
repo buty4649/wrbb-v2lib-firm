@@ -114,6 +114,7 @@ bool RubyRun(void)
 		char az[50];
 		sprintf(az, "%s is not Open!!", ExeFilename);
 
+#if 0
 		//SD用ボードがマウントしていればSDカードにmrbファイルが無いかチェックします
 		if (SD_init(ExeFilename) == 1){
 			//見つけたので、SDカードからフラッシュメモリにコピーします
@@ -131,10 +132,11 @@ bool RubyRun(void)
 			}
 		}
 		else{
+#endif
 			Serial.println(az);
 			mrb_close(mrb);
 			return false;
-		}
+//		}
 	}
 
 	//mrbファイルチェックを行う
