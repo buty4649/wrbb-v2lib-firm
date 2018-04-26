@@ -14,10 +14,13 @@
 //#include <mruby/string.h>
 //#include <mruby/variable.h>
 
-#include "sExec.h"
-#include "../wrbb.h"
-
 #define ATTACH_MAX	20
+
+#ifdef DEBUG
+#  define DEBUG_PRINT(m,v)    { Serial.print("** "); Serial.print((m)); Serial.print(":"); Serial.println((v)); }
+#else
+#  define DEBUG_PRINT(m,v)    // do nothing
+#endif
 
 //newはシステム起動後、1回しかさせないために、ここで初期化している。
 Servo *servo[ATTACH_MAX] ={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -232,7 +235,7 @@ mrb_value mrb_servo_detach(mrb_state *mrb, mrb_value self)
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void servo_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_servo_gem_init(mrb_state *mrb)
 {
 	//for (int i = 0; i < ATTACH_MAX; i++){
 	//	servo[i] = 0;
@@ -247,4 +250,8 @@ void servo_Init(mrb_state *mrb)
 	mrb_define_module_function(mrb, servoModule, "attached", mrb_servo_attached, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, servoModule, "attached?", mrb_servo_attached_q, MRB_ARGS_REQ(1));
 	mrb_define_module_function(mrb, servoModule, "detach", mrb_servo_detach, MRB_ARGS_REQ(1));
+}
+
+extern "C" void mrb_mruby_wrbb_servo_gem_final(mrb_state *mrb)
+{
 }

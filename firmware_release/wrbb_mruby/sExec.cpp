@@ -25,7 +25,6 @@
 #include "../wrbb.h"
 #include "sExec.h"
 #include "sSys.h"
-#include "sServo.h"
 
 #if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
 	#include "sSdCard.h"
@@ -87,7 +86,6 @@ bool RubyRun(void)
 	Serial.clearBreakState();
 
 	sys_Init(mrb);		//システム関連メソッドの設定
-	servo_Init(mrb);	//サーボ関連メソッドの設定
 
 	//classtest_Init(mrb);
 
