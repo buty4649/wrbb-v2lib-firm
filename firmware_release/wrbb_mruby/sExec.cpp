@@ -25,16 +25,9 @@
 #include "../wrbb.h"
 #include "sExec.h"
 #include "sSys.h"
-#include "sSerial.h"
-#include "sServo.h"
 
 #if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	#include "sSdCard.h"
 	#include "sWiFi.h"
-#endif
-
-#if REALTIMECLOCK
-	#include "sRtc.h"
 #endif
 
 #ifdef SAMBOUKAN
@@ -92,14 +85,8 @@ bool RubyRun(void)
 	Serial.clearBreakState();
 
 	sys_Init(mrb);		//システム関連メソッドの設定
-	serial_Init(mrb);	//シリアル通信関連メソッドの設定
-	servo_Init(mrb);	//サーボ関連メソッドの設定
 
 	//classtest_Init(mrb);
-
-#if REALTIMECLOCK
-	rtc_Init(mrb);		//RTC関連メソッドの設定
-#endif
 
 #ifdef SAMBOUKAN
 	dcMotor_Init(mrb);		//SAMBOUKAの Motorクラス
@@ -127,6 +114,7 @@ bool RubyRun(void)
 		char az[50];
 		sprintf(az, "%s is not Open!!", ExeFilename);
 
+#if 0
 		//SD用ボードがマウントしていればSDカードにmrbファイルが無いかチェックします
 		if (SD_init(ExeFilename) == 1){
 			//見つけたので、SDカードからフラッシュメモリにコピーします
@@ -144,10 +132,11 @@ bool RubyRun(void)
 			}
 		}
 		else{
+#endif
 			Serial.println(az);
 			mrb_close(mrb);
 			return false;
-		}
+//		}
 	}
 
 	//mrbファイルチェックを行う

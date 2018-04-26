@@ -13,9 +13,6 @@
 #include <mruby.h>
 #include <mruby/string.h>
 
-#include "../wrbb.h"
-#include "sSerial.h"
-
 #define  PANCAKE_BAURATE	115200
 #define  PANCAKE_WAIT		4
 
@@ -653,7 +650,7 @@ mrb_value text;
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void pancake_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_pancake_gem_init(mrb_state *mrb)
 {	
 	PanSend[0] = 0x80;
 
@@ -682,4 +679,8 @@ void pancake_Init(mrb_state *mrb)
 	struct RClass *musicModule = mrb_define_module(mrb, "Music");
 	mrb_define_module_function(mrb, musicModule, "score", mrb_pancake_Score, MRB_ARGS_REQ(4));
 	mrb_define_module_function(mrb, musicModule, "play", mrb_pancake_Play, MRB_ARGS_REQ(1));
+}
+
+extern "C" void mrb_mruby_wrbb_pancake_gem_final(mrb_state *mrb)
+{
 }
