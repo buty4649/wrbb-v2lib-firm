@@ -17,10 +17,9 @@
 
 #include "../wrbb.h"
 
-#include "sWiFi.h"
-
 extern HardwareSerial *RbSerial[];		//0:Serial(USB), 1:Serial1, 2:Serial3, 3:Serial2, 4:Serial6 5:Serial7
 
+#define  WIFI_CLASS     "WiFi"
 #define  WIFI_SERIAL	3
 #define  WIFI_BAUDRATE	115200
 //#define  WIFI_CTS		15
@@ -2300,7 +2299,7 @@ int decode = 0;
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-int esp8266_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_wifi_gem_init(mrb_state *mrb)
 {
 	//ESP8266からの受信を出力しないに設定
 	WiFiRecvOutlNum = -1;
@@ -2336,14 +2335,14 @@ int esp8266_Init(mrb_state *mrb)
 		}
 		else if (ret == 0){
 			//タイムアウトした場合は WiFiが使えないとする
-			return 0;
+			return;
 		}
 
 		//0,1で無いときは256バイト以上が返ってきている
 		cnt++;
 		if (cnt >= 3){
 			//3回ATE0を試みてダメだったら、あきらめる。
-			return 0;
+			return;
 		}
 	}
 
@@ -2390,6 +2389,8 @@ int esp8266_Init(mrb_state *mrb)
 	mrb_define_module_function(mrb, wifiModule, "base64", mrb_wifi_base64, MRB_ARGS_REQ(2) | MRB_ARGS_OPT(1));
 
 	mrb_define_module_function(mrb, wifiModule, "bypass", mrb_wifi_bypass, MRB_ARGS_NONE());
+}
 
-	return 1;
+extern "C" void mrb_mruby_wrbb_wifi_gem_final(mrb_state *mrb)
+{
 }

@@ -97,4 +97,5 @@ MRuby::CrossBuild.new("RX630") do |conf|
   conf.gem "./mrbgems/mruby-wrbb-sdcard"
   conf.gem "./mrbgems/mruby-wrbb-serial"
   conf.gem "./mrbgems/mruby-wrbb-servo"
+  conf.gem "./mrbgems/mruby-wrbb-wifi"
 end

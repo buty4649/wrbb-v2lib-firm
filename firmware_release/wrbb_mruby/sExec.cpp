@@ -26,10 +26,6 @@
 #include "sExec.h"
 #include "sSys.h"
 
-#if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	#include "sWiFi.h"
-#endif
-
 #ifdef SAMBOUKAN
 	#include "sDCMotor.h"
 #endif

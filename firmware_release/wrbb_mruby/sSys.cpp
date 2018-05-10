@@ -22,10 +22,6 @@
 #include "../wrbb.h"
 
 #include "sExec.h"
-#if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-    #define  SD_CLASS "SD"
-	#include "sWiFi.h"
-#endif
 
 #define EEPROMADDRESS	0xFF
 
@@ -189,118 +185,6 @@ mrb_value mrb_system_getmrbpath(mrb_state *mrb, mrb_value self)
 }
 
 //**************************************************
-// SDカードを使えるようにします
-//**************************************************
-mrb_value Is_useSD(mrb_state *mrb, mrb_value self, int mode)
-{
-int ret = 0;
-
-	return (mode == 0?mrb_fixnum_value(ret):mrb_bool_value(ret == 1));
-}
-
-//**************************************************
-// SDカードを使えるようにします: System.useSD
-// System.useSD()
-//戻り値
-// 0:使用不可, 1:使用可能
-//**************************************************
-mrb_value mrb_system_useSD(mrb_state *mrb, mrb_value self)
-{
-	return Is_useSD(mrb, self, 0);
-}
-
-//**************************************************
-// WiFiモジュールESP8266ボードを使えるようにします
-//**************************************************
-mrb_value Is_useWiFi(mrb_state *mrb, mrb_value self, int mode)
-{
-int ret = 0;
-
-#if FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	ret = esp8266_Init(mrb);		//ESP8266ボード関連メソッドの設定
-#endif
-
-	return (mode == 0?mrb_fixnum_value(ret):mrb_bool_value(ret == 1));
-}
-
-//**************************************************
-// WiFiモジュールESP8266ボードを使えるようにします: System.useWiFi
-// System.useWiFi()
-//戻り値
-// 0:使用不可, 1:使用可能
-//**************************************************
-mrb_value mrb_system_useWiFi(mrb_state *mrb, mrb_value self)
-{
-	return Is_useWiFi(mrb, self, 0);
-}
-
-//**************************************************
-// useで指定したクラスを使用できるようにします
-//**************************************************
-mrb_value Is_use(mrb_state *mrb, mrb_value self, int mode)
-{
-mrb_value vName, vOptions;
-char	*strName;
-int ret = 0;
-
-	int n = mrb_get_args(mrb, "S|A", &vName, &vOptions);
-
-	strName = RSTRING_PTR(vName);
-
-	if(strcmp(strName, SD_CLASS) == 0){
-		if(mode == 0){
-			return Is_useSD(mrb, self, 0);
-		}
-		else{
-			return Is_useSD(mrb, self, 1);
-		}
-	}
-	else if(strcmp(strName, WIFI_CLASS) == 0){
-		if(mode == 0){
-			return Is_useWiFi(mrb, self, 0);
-		}
-		else{
-			return Is_useWiFi(mrb, self, 1);
-		}
-	}
-	return (mode == 0?mrb_fixnum_value(ret):mrb_bool_value(ret == 1));
-}
-
-//**************************************************
-// 追加クラスを使用できるようにします: System.use?
-// System.use?(ClassName[,Options])
-//  ClassName: クラス名です。'SD'、'WiFi、'MP3'のいずれかです
-//  Options: オプションの配列です。
-//           SDはオプション無し。
-//           WiFiはオプション無し。
-//           MP3は再生中の一時停止に使用するピン番号と再生を止めるときに使用するピン番号の配列を指定します。例) [3,4]
-//
-//戻り値
-// false:使用不可, true:使用可能
-//**************************************************
-mrb_value mrb_system_use_p(mrb_state *mrb, mrb_value self)
-{
-	return Is_use(mrb, self, 1);
-}
-
-//**************************************************
-// 追加クラスを使用できるようにします: System.use
-// System.use(ClassName[,Options])
-//  ClassName: クラス名です。'SD'、'WiFi、'MP3'のいずれかです
-//  Options: オプションの配列です。
-//           SDはオプション無し。
-//           WiFiはオプション無し。
-//           MP3は再生中の一時停止に使用するピン番号と再生を止めるときに使用するピン番号の配列を指定します。例) [3,4]
-//
-//戻り値
-// 0:使用不可, 1:使用可能
-//**************************************************
-mrb_value mrb_system_use(mrb_state *mrb, mrb_value self)
-{
-	return Is_use(mrb, self, 0);
-}
-
-//**************************************************
 // ライブラリを定義します
 //**************************************************
 void sys_Init(mrb_state *mrb)
@@ -316,16 +200,6 @@ void sys_Init(mrb_state *mrb)
 	mrb_define_module_function(mrb, systemModule, "pop", mrb_system_pop, MRB_ARGS_REQ(2));
 
 	mrb_define_module_function(mrb, systemModule, "fileload", mrb_system_fileload, MRB_ARGS_NONE());
-
-	mrb_define_module_function(mrb, systemModule, "useSD", mrb_system_useSD, MRB_ARGS_NONE());
-	mrb_define_module_function(mrb, systemModule, "useWiFi", mrb_system_useWiFi, MRB_ARGS_NONE());
-
-	mrb_define_module_function(mrb, systemModule, "use", mrb_system_use,  MRB_ARGS_REQ(1)|MRB_ARGS_OPT(1));
-	mrb_define_module_function(mrb, systemModule, "use?", mrb_system_use_p,  MRB_ARGS_REQ(1)|MRB_ARGS_OPT(1));
-
-	//mrb_define_module_function(mrb, systemModule, "useSD?", mrb_system_useSD_p, MRB_ARGS_NONE());
-	//mrb_define_module_function(mrb, systemModule, "useWiFi?", mrb_system_useWiFi_p, MRB_ARGS_NONE());
-	//mrb_define_module_function(mrb, systemModule, "useMP3?", mrb_system_useMp3_p, MRB_ARGS_OPT(2));
 
 	mrb_define_module_function(mrb, systemModule, "getMrbPath", mrb_system_getmrbpath, MRB_ARGS_NONE());
 }
