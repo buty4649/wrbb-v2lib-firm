@@ -21,8 +21,6 @@
 
 #include "../wrbb.h"
 
-#include "sExec.h"
-
 #define EEPROMADDRESS	0xFF
 
 extern volatile char ProgVer[];
@@ -187,7 +185,7 @@ mrb_value mrb_system_getmrbpath(mrb_state *mrb, mrb_value self)
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-void sys_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_system_ext_gem_init(mrb_state *mrb)
 {
 	struct RClass *systemModule = mrb_define_module(mrb, "System");
 
@@ -202,4 +200,8 @@ void sys_Init(mrb_state *mrb)
 	mrb_define_module_function(mrb, systemModule, "fileload", mrb_system_fileload, MRB_ARGS_NONE());
 
 	mrb_define_module_function(mrb, systemModule, "getMrbPath", mrb_system_getmrbpath, MRB_ARGS_NONE());
+}
+
+extern "C" void mrb_mruby_wrbb_system_ext_gem_final(mrb_state *mrb)
+{
 }

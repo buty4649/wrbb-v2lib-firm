@@ -42,7 +42,7 @@ MRuby::CrossBuild.new("RX630") do |conf|
 
     common_path = File.dirname(__FILE__) + "/gr_common"
     cc.include_paths <<= common_path
-    %w(core lib/MsTimer2 lib/RTC lib/SD lib/Servo lib/Wire rx63n).each do |path|
+    %w(core lib/EEPROM lib/MsTimer2 lib/RTC lib/SD lib/Servo lib/Wire rx63n).each do |path|
       cc.include_paths <<= common_path + "/#{path}"
     end
 
@@ -97,5 +97,6 @@ MRuby::CrossBuild.new("RX630") do |conf|
   conf.gem "./mrbgems/mruby-wrbb-sdcard"
   conf.gem "./mrbgems/mruby-wrbb-serial"
   conf.gem "./mrbgems/mruby-wrbb-servo"
+  conf.gem "./mrbgems/mruby-wrbb-system-ext"
   conf.gem "./mrbgems/mruby-wrbb-wifi"
 end

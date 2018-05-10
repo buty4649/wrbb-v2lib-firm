@@ -24,7 +24,6 @@
 
 #include "../wrbb.h"
 #include "sExec.h"
-#include "sSys.h"
 
 #ifdef SAMBOUKAN
 	#include "sDCMotor.h"
@@ -80,8 +79,6 @@ bool RubyRun(void)
 #endif
 	Serial.clearBreakState();
 	Serial.clearDtrOffEvent();
-
-	sys_Init(mrb);		//システム関連メソッドの設定
 
 	//classtest_Init(mrb);
 
