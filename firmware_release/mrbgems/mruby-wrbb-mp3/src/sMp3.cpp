@@ -16,10 +16,9 @@
 
 #include "../wrbb.h"
 
-#include "sMp3.h"
-
 #define SW_ON		0
 #define SW_OFF		1
+#define MP3_CLASS   "MP3"
 
 int PausePin = 3;		//再生中の一時停止に使用するピン番号です。LOWになると一時停止/再開を繰り返します
 int StopPin = 4;		//再生を止めるときに使用するピン番号です。LOWになると停止します
@@ -208,12 +207,16 @@ int mp3_Init(mrb_state *mrb,int pausePin, int stopPin)
 //**************************************************
 // ライブラリを定義します
 //**************************************************
-int mp3_Init(mrb_state *mrb)
+extern "C" void mrb_mruby_wrbb_mp3_gem_init(mrb_state *mrb)
 {
 int pausePin, stopPin;
 
 	//ポーズ割り込みピン番号とスキップ割り込みピン番号を取得します
 	mrb_get_args(mrb, "ii", &pausePin, &stopPin);
 
-	return mp3_Init(mrb, pausePin, stopPin);
+	mp3_Init(mrb, pausePin, stopPin);
+}
+
+extern "C" void mrb_mruby_wrbb_mp3_gem_final(mrb_state *mrb)
+{
 }

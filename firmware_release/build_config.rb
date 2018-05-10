@@ -38,10 +38,11 @@ MRuby::CrossBuild.new("RX630") do |conf|
     cc.compile_options = "%{flags} -o %{outfile} -c %{infile}"
 
     cc.include_paths <<= File.dirname(__FILE__) + "/wrbb_eepfile"
+    cc.include_paths <<= File.dirname(__FILE__) + "/WavMp3p"
 
     common_path = File.dirname(__FILE__) + "/gr_common"
     cc.include_paths <<= common_path
-    %w(core lib/RTC lib/SD lib/Servo lib/Wire rx63n).each do |path|
+    %w(core lib/MsTimer2 lib/RTC lib/SD lib/Servo lib/Wire rx63n).each do |path|
       cc.include_paths <<= common_path + "/#{path}"
     end
 
@@ -91,6 +92,7 @@ MRuby::CrossBuild.new("RX630") do |conf|
   conf.gem "./mrbgems/mruby-wrbb-i2c"
   conf.gem "./mrbgems/mruby-wrbb-kernel-ext"
   conf.gem "./mrbgems/mruby-wrbb-mem"
+  conf.gem "./mrbgems/mruby-wrbb-mp3"
   conf.gem "./mrbgems/mruby-wrbb-rtc"
   conf.gem "./mrbgems/mruby-wrbb-sdcard"
   conf.gem "./mrbgems/mruby-wrbb-serial"
