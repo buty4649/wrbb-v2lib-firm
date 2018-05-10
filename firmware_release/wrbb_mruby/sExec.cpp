@@ -24,11 +24,6 @@
 
 #include "../wrbb.h"
 #include "sExec.h"
-#include "sSys.h"
-
-#if BOARD == BOARD_GR || FIRMWARE == SDBT || FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
-	#include "sWiFi.h"
-#endif
 
 #ifdef SAMBOUKAN
 	#include "sDCMotor.h"
@@ -84,8 +79,6 @@ bool RubyRun(void)
 #endif
 	Serial.clearBreakState();
 	Serial.clearDtrOffEvent();
-
-	sys_Init(mrb);		//システム関連メソッドの設定
 
 	//classtest_Init(mrb);
 
